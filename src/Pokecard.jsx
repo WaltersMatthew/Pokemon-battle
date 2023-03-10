@@ -1,13 +1,11 @@
+import './css/Pokecard.css'
+
 export default function Pokecard(props){
     
-    const urlFixer = (id) => {
-        if(id < 10) id = `00${id}`
-        else if(id < 100)  id = `0${id}`
-        return id
-    }
+    const urlFixer = (id) => id < 100 ? `00${id}`.slice(-3) : id
 
     return(
-            <div className={props.type}>
+            <div className={props.type} key={props.id}>
                 <h1>{props.name}</h1>
                 <img src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${urlFixer(props.id)}.png`} alt={props.name} />
                 <p>Type: {props.type}</p>

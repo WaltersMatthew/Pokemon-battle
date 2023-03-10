@@ -1,0 +1,33 @@
+.pokedex div {
+    background-color: lightgrey;
+    border-radius: 20px;
+    margin: 0 5px 0 5px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 7px 10px 12px -5px;
+}
+
+.electric {
+    border: 10px solid yellow;
+}
+.water {
+    border: 10px solid blue;
+}
+.poison {
+    border: 10px solid black;
+}
+.bug {
+    border: 10px solid burlywood;
+}
+.flying {
+    border: 10px solid skyblue;
+}
+.fire {
+    border: 10px solid red;
+}
+.normal {
+    border: 10px solid grey;
+}
+.grass {
+    border: 10px solid green;
+}
