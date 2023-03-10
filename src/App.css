@@ -2,20 +2,20 @@
     text-align: center;
 }
 body {
-    padding: 20px;
+    padding: 0 10px 0 10px;
     text-align: center;
 }
-Pokecard {
+.card-block div {
     background-color: lightgrey;
     border: 10px solid;
     border-radius: 20px;
-    margin: 5px;
+    margin: 0 5px 0 5px;
     padding: 10px;
     text-align: center;
 }
 .card-block {
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto;
 }
 .electric {
     border-color: yellow;
