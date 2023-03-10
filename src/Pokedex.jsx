@@ -11,7 +11,7 @@ export default function Pokedex({pokemon, totalExp}){
     })
     return(
     <>        
-        <h2>Total Points: {totalExp}</h2>
+        <h2>Total Exp: {totalExp}</h2>
         <div className="pokedex">{playerMap}</div>
        
         {/* <h2>Total Points: {handTwoTotal}</h2> */}

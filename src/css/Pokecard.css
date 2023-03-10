@@ -1,10 +1,24 @@
-.pokedex div {
-    background-color: lightgrey;
+.card {
+    background-color: #ffffff;
     border-radius: 20px;
-    margin: 0 5px 0 5px;
-    padding: 10px;
+    margin: 10px 0;
+    padding: 5px;
     text-align: center;
     box-shadow: 7px 10px 12px -5px;
+    width: 300px;
+}
+
+.pokecard-image {
+    background-color: lightgrey;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.pokecard-image img {
+    transition: all ease 500ms;
+}
+.pokecard-image img:hover {
+    transform: scale(1.25);
 }
 
 .electric {

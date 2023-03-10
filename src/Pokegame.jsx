@@ -37,23 +37,24 @@ export default function Pokegame() {
     else handTwo.push(chooser())
   }
   
+  // get total EXP for both hands
   let exp1 = handOne.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
   let exp2 = handTwo.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
 
 
     const winnerText = (
-        <>
+        <div className="winner">
             <h1 style={{color: 'gold', fontSize: '5rem', marginBottom: "-30px"}}> 
-                <img src="/pokeball.png" alt="pokeball" height={100} />
+                <img src="/pokeball.png" alt="pokeball" height={100} style={{marginBottom:"-20px"}}/>
                     Winner!
-                <img src="/pokeball.png" alt="pokeball" height={100}/>
+                <img src="/pokeball.png" alt="pokeball" height={100} style={{marginBottom:"-20px"}}/>
             </h1>
         
-        </>
+        </div>
     )
     
     return(
-        <div>
+        <div className="pokegame">
             {exp1 > exp2 ? winnerText : <h1>Player One</h1>}
             <Pokedex pokemon={handOne} totalExp = {exp1}/>
             {exp2 > exp1 ? winnerText : <h1>Player Two</h1>}

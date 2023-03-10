@@ -1,5 +1,12 @@
 .pokedex {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: auto auto auto auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: space-around;
+}
+
+@media (max-width: 1100px) {
+    .winner img {
+        display: none;
+    }
 }
