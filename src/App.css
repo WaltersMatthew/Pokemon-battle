@@ -3,3 +3,7 @@ body {
     text-align: center;
     background-color: #666;
 }
+.loading-text {
+    font-size: 5rem;
+    margin-top: 100px;
+}

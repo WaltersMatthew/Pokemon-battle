@@ -1,42 +1,115 @@
+import { useEffect, useState } from "react"
 import Pokedex from "./Pokedex"
 
-const data = [
-    {id: 4, name: 'Charmander', type: 'fire', base_experience: 62},
-    {id: 7, name: 'Squirtle', type: 'water', base_experience: 63},
-    {id: 11, name: 'Metapod', type: 'bug', base_experience: 72},
-    {id: 12, name: 'Butterfree', type: 'flying', base_experience: 178},
-    {id: 25, name: 'Pikachu', type: 'electric', base_experience: 112},
-    {id: 39, name: 'Jigglypuff', type: 'normal', base_experience: 95},
-    {id: 43, name: 'Oddish', type: 'grass', base_experience: 64},
-    {id: 52, name: 'Meowth', type: 'normal', base_experience: 58},
-    {id: 94, name: 'Gengar', type: 'poison', base_experience: 225},
-    {id: 125, name: 'Electabuzz', type: 'electric', base_experience: 172},
-    {id: 133, name: 'Eevee', type: 'normal', base_experience: 65},
-    {id: 143, name: 'Snorlax', type: 'normal', base_experience: 189}
-]
-
 export default function Pokegame() {
-   let handOne = []
-   let handTwo = []
-    // function to get random data from array with no repeats
-   function randomNoRepeats(array) {
-        let copy = array.slice(0);
-        return function() {
-            if (copy.length < 1) { copy = array.slice(0); }
-            let index = Math.floor(Math.random() * copy.length);
-            let item = copy[index];
-            copy.splice(index, 1);
-            return item;
-        };
-  }
-  // calling the function on the pokemon array
-  const chooser = randomNoRepeats(data)
-  // loop and push into the two hands
-  for(let i = 0; i <= 7; i++){
-    if(i%2) handOne.push(chooser())
-    else handTwo.push(chooser())
-  }
-  
+    const [poke, setPoke] = useState([])
+    const [handOne, setHandOne] = useState([])
+    const [handTwo, setHandTwo] = useState([])
+    const [dataFetched, setDataFetched] = useState(false)
+     
+    useEffect(() => {
+        function fetchKantoPokemon() {
+          fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+            .then(response => response.json())
+            .then(function (allpokemon) {
+              const pokemonPromises = allpokemon.results.map(fetchPokemonData);
+              Promise.all(pokemonPromises).then(pokemonData => {
+                setPoke(pokemonData);
+                setDataFetched(true);
+              });
+            });
+        }
+      
+        async function fetchPokemonData(pokemon) {
+          let url = pokemon.url;
+          try {
+                const response = await fetch(url)
+                const pokeData = await response.json()
+                return pokeData
+            } catch (err) {
+                return console.log(err)
+            }
+        }
+      
+        fetchKantoPokemon()
+      }, []);
+      
+
+      useEffect(() =>{     
+        if(poke.length>0){
+          // function to get random data from array with no repeats
+          function randomNoRepeats(array) {
+            let copy = array.slice(0);
+            let lastSelectedIndex = -1;
+          
+            return function() {
+              if (copy.length < 1) { copy = array.slice(0); lastSelectedIndex = -1; }
+          
+              let index;
+              let item;
+              do {
+                index = Math.floor(Math.random() * copy.length);
+                item = copy[index];
+              } while (index === lastSelectedIndex || !item);
+              
+              copy.splice(index, 1);
+              lastSelectedIndex = index;
+              return item;
+            };
+          }
+      
+          // calling the function on the pokemon array
+          function playGame() {
+            const chooser = randomNoRepeats(poke);
+            let tempHandOne = [];
+            let tempHandTwo = [];
+            for (let i = 0; i <= 7; i++) {
+              if (i % 2) {
+                tempHandOne.push(chooser());
+              } else {
+                tempHandTwo.push(chooser());
+              }
+            }
+            setHandOne(tempHandOne);
+            setHandTwo(tempHandTwo);
+          }
+          
+          if (dataFetched) {
+            playGame();
+          }
+        }
+      }, [poke, dataFetched]);
+      
+
+      const handleReset = () => {
+        setDataFetched(false)
+        setPoke([]);
+        setHandOne([]);
+        setHandTwo([]);
+      
+        async function fetchKantoPokemon() {
+          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=251')
+          const allpokemon = await response.json()
+          const promises = allpokemon.results.map((pokemon) => fetchPokemonData(pokemon))
+          return await Promise.all(promises)
+        }
+      
+        function fetchPokemonData(pokemon) {
+          let url = pokemon.url;
+          fetch(url)
+            .then(response => response.json())
+            .then(function(pokeData) {
+              setPoke(prevState => [...prevState, pokeData]);
+            })
+            .catch(err => console.log(err))
+        }
+      
+        fetchKantoPokemon();
+        
+        setDataFetched(true)
+      }
+      
+
   // get total EXP for both hands
   let exp1 = handOne.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
   let exp2 = handTwo.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
@@ -52,13 +125,23 @@ export default function Pokegame() {
         
         </div>
     )
-    
-    return(
+    const loadingText = (
+        <h1 className="loading-text">Preparing for battle...</h1>
+    )
+
+    const gameBoard = (
         <div className="pokegame">
+            <h3>Refresh the page to play again!</h3>
+            {/* <button onClick={handleReset}>Battle again!</button> */}
             {exp1 > exp2 ? winnerText : <h1>Player One</h1>}
             <Pokedex pokemon={handOne} totalExp = {exp1}/>
             {exp2 > exp1 ? winnerText : <h1>Player Two</h1>}
             <Pokedex pokemon={handTwo} totalExp = {exp2}/>
         </div>
+    )
+    return(
+        <>
+            {dataFetched ? gameBoard : loadingText}
+        </>
     )
 }
