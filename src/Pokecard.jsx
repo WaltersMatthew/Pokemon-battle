@@ -11,7 +11,7 @@ export default function Pokecard(props){
                 <div className='pokecard-image'>
                     <img src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${urlFixer(props.id)}.png`} alt={props.name} />
                 </div>
-                <p>Type: {props.type}</p>
+                <p>Type: {capitalizer(props.type)}</p>
                 <p>Exp: {props.base_experience}</p>
             </div>
 

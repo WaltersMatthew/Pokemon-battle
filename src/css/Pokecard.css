@@ -28,10 +28,10 @@
     border: 10px solid blue;
 }
 .poison {
-    border: 10px solid black;
+    border: 10px solid #9f409f;
 }
 .bug {
-    border: 10px solid burlywood;
+    border: 10px solid #a8b720;
 }
 .flying {
     border: 10px solid skyblue;
@@ -40,8 +40,32 @@
     border: 10px solid red;
 }
 .normal {
-    border: 10px solid grey;
+    border: 10px solid #a8a877;
 }
 .grass {
     border: 10px solid green;
+}
+.fighting {
+    border: 10px solid #c03028;
+}
+.ground {
+    border: 10px solid #e0c068;
+}
+.rock {
+    border: 10px solid #b8a038;
+}
+.ice {
+    border: 10px solid #98d8d8;
+}
+.dragon {
+    border: 10px solid #7038f8;
+}
+.ghost {
+    border: 10px solid #705898;
+}
+.psychic {
+    border: 10px solid #f85788;
+}
+.fairy {
+    border: 10px solid #ee99ac;
 }

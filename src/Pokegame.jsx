@@ -81,39 +81,39 @@ export default function Pokegame() {
       }, [poke, dataFetched]);
       
 
-      const handleReset = () => {
-        setDataFetched(false)
-        setPoke([]);
-        setHandOne([]);
-        setHandTwo([]);
+    //   const handleReset = () => {
+    //     setDataFetched(false)
+    //     setPoke([]);
+    //     setHandOne([]);
+    //     setHandTwo([]);
       
-        async function fetchKantoPokemon() {
-          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=251')
-          const allpokemon = await response.json()
-          const promises = allpokemon.results.map((pokemon) => fetchPokemonData(pokemon))
-          return await Promise.all(promises)
-        }
+    //     async function fetchKantoPokemon() {
+    //       const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+    //       const allpokemon = await response.json()
+    //       const promises = allpokemon.results.map((pokemon) => fetchPokemonData(pokemon))
+    //       return await Promise.all(promises)
+    //     }
       
-        function fetchPokemonData(pokemon) {
-          let url = pokemon.url;
-          fetch(url)
-            .then(response => response.json())
-            .then(function(pokeData) {
-              setPoke(prevState => [...prevState, pokeData]);
-            })
-            .catch(err => console.log(err))
-        }
+    //     function fetchPokemonData(pokemon) {
+    //       let url = pokemon.url;
+    //       fetch(url)
+    //         .then(response => response.json())
+    //         .then(function(pokeData) {
+    //           setPoke(prevState => [...prevState, pokeData]);
+    //         })
+    //         .catch(err => console.log(err))
+    //     }
       
-        fetchKantoPokemon();
+    //     fetchKantoPokemon();
         
-        setDataFetched(true)
-      }
+    //     setDataFetched(true)
+    //   }
       
 
   // get total EXP for both hands
   let exp1 = handOne.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
   let exp2 = handTwo.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
-
+      console.log(poke)
 
     const winnerText = (
         <div className="winner">
