@@ -7,3 +7,10 @@ body {
     font-size: 8rem;
     margin-top: 200px;
 }
+button {
+    padding: 5px 10px;
+    font-size: 3rem;
+    border-radius: 10px;
+    box-shadow: 7px 10px 12px -5px;
+    background-color: lightgrey;
+}

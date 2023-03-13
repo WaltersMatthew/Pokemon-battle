@@ -10,3 +10,24 @@
         display: none;
     }
 }
+
+@media (max-width: 500px) {
+    img {
+        height: 100px;
+    }
+    .card {
+        max-width: 40%;
+        max-height: 250px;
+    }
+    .card h1,
+    p {
+        margin: 0;
+        font-size: 100%;
+    }
+    .loading-text {
+        font-size: 3rem;
+    }
+    .winner {
+        margin-top: -50px;
+    }
+}

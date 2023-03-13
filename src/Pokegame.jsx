@@ -1,147 +1,185 @@
-import { useEffect, useState } from "react"
-import Pokedex from "./Pokedex"
+import { useEffect, useState } from "react";
+import Pokedex from "./Pokedex";
 
 export default function Pokegame() {
-    const [poke, setPoke] = useState([])
-    const [handOne, setHandOne] = useState([])
-    const [handTwo, setHandTwo] = useState([])
-    const [dataFetched, setDataFetched] = useState(false)
-     
+    const [poke, setPoke] = useState([]);
+    const [handOne, setHandOne] = useState([]);
+    const [handTwo, setHandTwo] = useState([]);
+    const [dataFetched, setDataFetched] = useState(false);
+
     useEffect(() => {
         function fetchKantoPokemon() {
-          fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-            .then(response => response.json())
-            .then(function (allpokemon) {
-              const pokemonPromises = allpokemon.results.map(fetchPokemonData);
-              Promise.all(pokemonPromises).then(pokemonData => {
-                setPoke(pokemonData);
-                setDataFetched(true);
-              });
-            });
+            fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+                .then((response) => response.json())
+                .then(function (allpokemon) {
+                    const pokemonPromises =
+                        allpokemon.results.map(fetchPokemonData);
+                    Promise.all(pokemonPromises).then((pokemonData) => {
+                        setPoke(pokemonData);
+                        setDataFetched(true);
+                    });
+                });
         }
-      
+
         async function fetchPokemonData(pokemon) {
-          let url = pokemon.url;
-          try {
-                const response = await fetch(url)
-                const pokeData = await response.json()
-                return pokeData
+            let url = pokemon.url;
+            try {
+                const response = await fetch(url);
+                const pokeData = await response.json();
+                return pokeData;
             } catch (err) {
-                return console.log(err)
+                return console.log(err);
             }
         }
-      
-        fetchKantoPokemon()
-      }, []);
-      
 
-      useEffect(() =>{     
-        if(poke.length>0){
-          // function to get random data from array with no repeats
-          function randomNoRepeats(array) {
+        fetchKantoPokemon();
+    }, []);
+
+    useEffect(() => {
+        if (poke.length > 0) {
+            // function to get random data from array with no repeats
+            function randomNoRepeats(array) {
+                let copy = array.slice(0);
+                let lastSelectedIndex = -1;
+
+                return function () {
+                    if (copy.length < 1) {
+                        copy = array.slice(0);
+                        lastSelectedIndex = -1;
+                    }
+
+                    let index;
+                    let item;
+                    do {
+                        index = Math.floor(Math.random() * copy.length);
+                        item = copy[index];
+                    } while (index === lastSelectedIndex || !item);
+
+                    copy.splice(index, 1);
+                    lastSelectedIndex = index;
+                    return item;
+                };
+            }
+
+            // calling the function on the pokemon array
+            function playGame() {
+                const chooser = randomNoRepeats(poke);
+                let tempHandOne = [];
+                let tempHandTwo = [];
+                for (let i = 0; i <= 7; i++) {
+                    if (i % 2) {
+                        tempHandOne.push(chooser());
+                    } else {
+                        tempHandTwo.push(chooser());
+                    }
+                }
+                setHandOne(tempHandOne);
+                setHandTwo(tempHandTwo);
+            }
+
+            if (dataFetched) {
+                playGame();
+            }
+        }
+    }, [poke, dataFetched]);
+
+    const handleReset = () => {
+        setDataFetched(false);
+        //     setPoke([]);
+        setHandOne([]);
+        setHandTwo([]);
+
+        function randomNoRepeats(array) {
             let copy = array.slice(0);
             let lastSelectedIndex = -1;
-          
-            return function() {
-              if (copy.length < 1) { copy = array.slice(0); lastSelectedIndex = -1; }
-          
-              let index;
-              let item;
-              do {
-                index = Math.floor(Math.random() * copy.length);
-                item = copy[index];
-              } while (index === lastSelectedIndex || !item);
-              
-              copy.splice(index, 1);
-              lastSelectedIndex = index;
-              return item;
+
+            return function () {
+                if (copy.length < 1) {
+                    copy = array.slice(0);
+                    lastSelectedIndex = -1;
+                }
+
+                let index;
+                let item;
+                do {
+                    index = Math.floor(Math.random() * copy.length);
+                    item = copy[index];
+                } while (index === lastSelectedIndex || !item);
+
+                copy.splice(index, 1);
+                lastSelectedIndex = index;
+                return item;
             };
-          }
-      
-          // calling the function on the pokemon array
-          function playGame() {
+        }
+        function playGame() {
             const chooser = randomNoRepeats(poke);
             let tempHandOne = [];
             let tempHandTwo = [];
             for (let i = 0; i <= 7; i++) {
-              if (i % 2) {
-                tempHandOne.push(chooser());
-              } else {
-                tempHandTwo.push(chooser());
-              }
+                if (i % 2) {
+                    tempHandOne.push(chooser());
+                } else {
+                    tempHandTwo.push(chooser());
+                }
             }
             setHandOne(tempHandOne);
             setHandTwo(tempHandTwo);
-          }
-          
-          if (dataFetched) {
-            playGame();
-          }
         }
-      }, [poke, dataFetched]);
-      
 
-    //   const handleReset = () => {
-    //     setDataFetched(false)
-    //     setPoke([]);
-    //     setHandOne([]);
-    //     setHandTwo([]);
-      
-    //     async function fetchKantoPokemon() {
-    //       const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-    //       const allpokemon = await response.json()
-    //       const promises = allpokemon.results.map((pokemon) => fetchPokemonData(pokemon))
-    //       return await Promise.all(promises)
-    //     }
-      
-    //     function fetchPokemonData(pokemon) {
-    //       let url = pokemon.url;
-    //       fetch(url)
-    //         .then(response => response.json())
-    //         .then(function(pokeData) {
-    //           setPoke(prevState => [...prevState, pokeData]);
-    //         })
-    //         .catch(err => console.log(err))
-    //     }
-      
-    //     fetchKantoPokemon();
-        
-    //     setDataFetched(true)
-    //   }
-      
+        playGame();
 
-  // get total EXP for both hands
-  let exp1 = handOne.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
-  let exp2 = handTwo.reduce((exp, pokemon) => exp + pokemon.base_experience, 0)
-      console.log(poke)
+        setDataFetched(true);
+    };
+
+    // get total EXP for both hands
+    let exp1 = handOne.reduce(
+        (exp, pokemon) => exp + pokemon.base_experience,
+        0
+    );
+    let exp2 = handTwo.reduce(
+        (exp, pokemon) => exp + pokemon.base_experience,
+        0
+    );
+    console.log(poke);
 
     const winnerText = (
         <div className="winner">
-            <h1 style={{color: 'gold', fontSize: '5rem', marginBottom: "-30px"}}> 
-                <img src="/pokeball.png" alt="pokeball" height={100} style={{marginBottom:"-20px"}}/>
-                    Winner!
-                <img src="/pokeball.png" alt="pokeball" height={100} style={{marginBottom:"-20px"}}/>
+            <h1
+                style={{
+                    color: "gold",
+                    fontSize: "5rem",
+                    marginBottom: "-30px",
+                }}
+            >
+                <img
+                    src="/pokeball.png"
+                    alt="pokeball"
+                    height={100}
+                    style={{ marginBottom: "-20px" }}
+                />
+                Winner!
+                <img
+                    src="/pokeball.png"
+                    alt="pokeball"
+                    height={100}
+                    style={{ marginBottom: "-20px" }}
+                />
             </h1>
-        
         </div>
-    )
+    );
     const loadingText = (
         <h1 className="loading-text">Preparing for battle...</h1>
-    )
+    );
 
     const gameBoard = (
         <div className="pokegame">
-            <h3>Refresh the page to play again!</h3>
-            {/* <button onClick={handleReset}>Battle again!</button> */}
+            <button onClick={handleReset}>Click here to battle again!</button>
             {exp1 > exp2 ? winnerText : <h1>Player One</h1>}
-            <Pokedex pokemon={handOne} totalExp = {exp1}/>
+            <Pokedex pokemon={handOne} totalExp={exp1} />
             {exp2 > exp1 ? winnerText : <h1>Player Two</h1>}
-            <Pokedex pokemon={handTwo} totalExp = {exp2}/>
+            <Pokedex pokemon={handTwo} totalExp={exp2} />
+            <button onClick={handleReset}>Click here to battle again!</button>
         </div>
-    )
-    return(
-        <>
-            {dataFetched ? gameBoard : loadingText}
-        </>
-    )
+    );
+    return <>{dataFetched ? gameBoard : loadingText}</>;
 }
