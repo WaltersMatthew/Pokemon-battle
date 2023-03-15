@@ -11,6 +11,6 @@ button {
     padding: 5px 10px;
     font-size: 3rem;
     border-radius: 10px;
-    box-shadow: 7px 10px 12px -5px;
+    box-shadow: 7px 10px 12px -5px black;
     background-color: lightgrey;
 }

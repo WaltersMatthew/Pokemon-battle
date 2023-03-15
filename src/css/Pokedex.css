@@ -5,6 +5,10 @@
     align-items: space-around;
 }
 
+.winner {
+    margin-top: -50px;
+}
+
 @media (max-width: 1100px) {
     .winner img {
         display: none;
@@ -16,7 +20,7 @@
         height: 100px;
     }
     .card {
-        max-width: 40%;
+        width: 40%;
         max-height: 250px;
     }
     .card h1,

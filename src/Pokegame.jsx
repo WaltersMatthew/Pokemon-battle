@@ -84,7 +84,6 @@ export default function Pokegame() {
     }, [poke, dataFetched]);
 
     const handleReset = () => {
-        setDataFetched(false);
         //     setPoke([]);
         setHandOne([]);
         setHandTwo([]);
@@ -112,6 +111,7 @@ export default function Pokegame() {
             };
         }
         function playGame() {
+            setDataFetched(false);
             const chooser = randomNoRepeats(poke);
             let tempHandOne = [];
             let tempHandTwo = [];
@@ -124,11 +124,11 @@ export default function Pokegame() {
             }
             setHandOne(tempHandOne);
             setHandTwo(tempHandTwo);
+            setTimeout(() => {
+                setDataFetched(true);
+            }, 1000);
         }
-
         playGame();
-
-        setDataFetched(true);
     };
 
     // get total EXP for both hands
@@ -140,7 +140,6 @@ export default function Pokegame() {
         (exp, pokemon) => exp + pokemon.base_experience,
         0
     );
-    console.log(poke);
 
     const winnerText = (
         <div className="winner">
@@ -167,6 +166,7 @@ export default function Pokegame() {
             </h1>
         </div>
     );
+
     const loadingText = (
         <h1 className="loading-text">Preparing for battle...</h1>
     );
@@ -181,5 +181,6 @@ export default function Pokegame() {
             <button onClick={handleReset}>Click here to battle again!</button>
         </div>
     );
+
     return <>{dataFetched ? gameBoard : loadingText}</>;
 }
