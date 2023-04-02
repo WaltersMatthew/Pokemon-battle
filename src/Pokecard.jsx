@@ -10,9 +10,10 @@ export default function Pokecard(props) {
             <h1>{capitalizer(props.name)}</h1>
             <div className="pokecard-image">
                 <img
-                    src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${urlFixer(
-                        props.id
-                    )}.png`}
+                    // src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${urlFixer(
+                    //     props.id
+                    // )}.png`}
+                    src={`https://play.pokemonshowdown.com/sprites/ani/${props.name}.gif`}
                     alt={props.name}
                 />
             </div>
