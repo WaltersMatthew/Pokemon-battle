@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./css/Pokecard.css";
 
 export default function Pokecard(props) {
@@ -9,13 +10,15 @@ export default function Pokecard(props) {
         <div className={`${props.type} card`} key={props.id}>
             <h1>{capitalizer(props.name)}</h1>
             <div className="pokecard-image">
-                <img
-                    // src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${urlFixer(
-                    //     props.id
-                    // )}.png`}
-                    src={`https://play.pokemonshowdown.com/sprites/ani/${props.name}.gif`}
-                    alt={props.name}
-                />
+                <Link to={`/${props.id}`}>
+                    <img
+                        // src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${urlFixer(
+                        //     props.id
+                        // )}.png`}
+                        src={`https://play.pokemonshowdown.com/sprites/ani/${props.name}.gif`}
+                        alt={props.name}
+                    />
+                </Link>
             </div>
             <p>Type: {capitalizer(props.type)}</p>
             <p>Exp: {props.base_experience}</p>

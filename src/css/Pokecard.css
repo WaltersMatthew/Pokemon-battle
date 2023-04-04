@@ -25,11 +25,14 @@
     border-radius: 10px;
     height: 150px;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pokecard-image img {
     transition: all ease 500ms;
     margin: auto;
+    height: 100px;
 }
 .pokecard-image img:hover {
     transform: scale(1.25);
