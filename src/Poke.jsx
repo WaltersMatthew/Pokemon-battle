@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import "./css/Poke.css";
+import "./css/Pokecard.css";
 function Poke() {
     const [pokeData, setPokeData] = useState();
     const { id } = useParams();
 
+    // util function to capitalize first letter
     const capitalizer = (name) => name[0].toUpperCase() + name.slice(1);
 
+    //fetch Pokemon data when component mounts or ID param changes
     useEffect(() => {
         async function fetchAndLogPokemonData(pokeId) {
             try {
@@ -26,16 +29,16 @@ function Poke() {
     const abilityMap =
         pokeData &&
         pokeData.abilities.map((ability) => {
-            return <li key={ability.slot}>{ability.ability.name}</li>;
+            return <p key={ability.slot}>{ability.ability.name}</p>;
         });
 
     const statMap =
         pokeData &&
         pokeData.stats.map((stat) => {
             return (
-                <li key={stat.stat.url}>
-                    {stat.stat.name}: {stat.base_stat}
-                </li>
+                <p key={stat.stat.url}>
+                    {capitalizer(stat.stat.name)}: {stat.base_stat}
+                </p>
             );
         });
 
@@ -48,15 +51,16 @@ function Poke() {
     return (
         <div>
             <h1>{pokeData && capitalizer(pokeData.name)}</h1>
-            <div className="types">
-                <h2>{typeMap}</h2>
+            <div>
+                <div className="types">{typeMap}</div>
+                <div className="height-weight">
+                    <p>Height: {pokeData && pokeData.height * 10}cm</p>
+                    <p>Weight: {pokeData && pokeData.weight / 10}kg</p>
+                </div>
             </div>
-            <div className="height-weight">
-                <p>Height: {pokeData && pokeData.height * 10}cm</p>
-                <p>Weight: {pokeData && pokeData.weight / 10}kg</p>
-            </div>
-            <div className="sprites">
-                <h1>Various Sprites</h1>
+            <div
+                className={`sprites ${pokeData && pokeData.types[0].type.name}`}
+            >
                 <img
                     src={pokeData && pokeData.sprites.front_default}
                     height="200px"
@@ -89,11 +93,12 @@ function Poke() {
                     alt={pokeData && pokeData.name}
                 />
             </div>
-            <div className="stats">
-                <ul>{statMap}</ul>
-            </div>
-            <div className="abilities">
-                <ul>{abilityMap}</ul>
+            <div className="stats-abilites">
+                <div className="stats">{statMap}</div>
+                <div className="abilities">
+                    <h2>Special Abilites</h2>
+                    {abilityMap}
+                </div>
             </div>
         </div>
     );

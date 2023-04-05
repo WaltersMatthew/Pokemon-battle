@@ -20,7 +20,7 @@
         height: 100px;
     }
     .card {
-        width: 40%;
+        width: fit-content;
         max-height: 250px;
     }
     .card h1,

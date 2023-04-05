@@ -1,0 +1,37 @@
+h1 {
+    font-size: 3rem;
+}
+.types {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+.height-weight {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem;
+}
+.sprites {
+    background-color: #888;
+    box-shadow: 5px 5px 5px black;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+}
+.stats-abilites {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+}
+p {
+    font-size: 2rem;
+}
+@media screen and (max-width: 400px) {
+    p {
+        font-size: 1rem;
+    }
+}
