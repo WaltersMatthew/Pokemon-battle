@@ -84,7 +84,6 @@ export default function Pokegame() {
     }, [poke, dataFetched]);
 
     const handleReset = () => {
-        //     setPoke([]);
         setHandOne([]);
         setHandTwo([]);
 

@@ -5,14 +5,16 @@ import "./css/Poke.css";
 import "./css/Pokecard.css";
 function Poke() {
     const [pokeData, setPokeData] = useState();
+
     const { id } = useParams();
 
+    console.log(id);
     // util function to capitalize first letter
     const capitalizer = (name) => name[0].toUpperCase() + name.slice(1);
 
     //fetch Pokemon data when component mounts or ID param changes
     useEffect(() => {
-        async function fetchAndLogPokemonData(pokeId) {
+        async function fetchPokemonData(pokeId) {
             try {
                 const response = await fetch(
                     `https://pokeapi.co/api/v2/pokemon/${pokeId}`
@@ -23,7 +25,7 @@ function Poke() {
                 console.log(error);
             }
         }
-        fetchAndLogPokemonData(id);
+        fetchPokemonData(id);
     }, [id]);
 
     const abilityMap =
@@ -54,7 +56,9 @@ function Poke() {
             <div>
                 <div className="types">{typeMap}</div>
                 <div className="height-weight">
+                    {/* multiply by 10 to get from decimeters to centimeters */}
                     <p>Height: {pokeData && pokeData.height * 10}cm</p>
+                    {/* divide by 10 to get from decigrams to kilograms */}
                     <p>Weight: {pokeData && pokeData.weight / 10}kg</p>
                 </div>
             </div>

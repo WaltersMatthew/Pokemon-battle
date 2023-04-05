@@ -6,7 +6,7 @@
     text-align: center;
     box-shadow: 7px 10px 12px -5px;
     /* transform: translateX(300%); */
-    transition: all 1s ease-in-out;
+    /* transition: all 1s ease-in-out; */
     width: 20%;
     min-width: fit-content;
 }
@@ -18,11 +18,11 @@
 .card h1 {
     margin: 2px;
 }
-
+/* 
 .card.show {
     opacity: 0;
     transform: translateX(0);
-}
+} */
 
 .pokecard-image {
     background-color: lightgrey;

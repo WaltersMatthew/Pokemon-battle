@@ -9,7 +9,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Pokegame />} exact />
-                <Route path={"/:id"} element={<Poke id={`${id}`} />} />
+                <Route path={"/:id"} element={<Poke />} />
             </Routes>
         </BrowserRouter>
     );
